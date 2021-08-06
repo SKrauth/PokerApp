@@ -1,32 +1,23 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { Border, Input, Button, List, Row, Column, CardBox } from "./styles";
 
-const Column = styled.div`
-  width: 40%;
-  border: 1px solid black;
-  border-radius: 3px;
-`;
-
-const Input = styled.input`
-  padding: 0.5em;
-  margin: 0.5em;
-  border: 2px solid black;
-  border-radius: 3px;
-`;
-
-const Button = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid black;
-  border-radius: 3px;
-`;
-
-const Hand = ({curHand}) => {
-  return (<>
-    {curHand.cards ? <p>{curHand.cards.join('-')}</p> : null}
-  </>)
-}
+const Hand = ({ curHand }) => {
+  return (
+    <Row>
+      {curHand.cards
+        ? curHand.cards.map(card => (
+            <Column>
+              <CardBox
+                color={card[1] == "H" || card[1] == "D" ? "red" : "black"}
+              >
+                {card}
+              </CardBox>
+            </Column>
+          ))
+        : null}
+    </Row>
+  );
+};
 
 const UserList = ({ users, submitPlayer, dealCards }) => {
   const [player, setPlayer] = useState("");
@@ -37,23 +28,31 @@ const UserList = ({ users, submitPlayer, dealCards }) => {
   };
 
   return (
-    <Column>
+    <Border>
       <div>
         <Input value={player} onChange={e => setPlayer(e.target.value)} />
-        <Button disabled={player === ""} onClick={handleClick}>New Player</Button>
+        <Button disabled={player === ""} onClick={handleClick}>
+          New Player
+        </Button>
       </div>
       <ul>
-        {
-          users.map(user =>
-            <li key={user.id}>
-              <h5>{user.name}</h5>
-              <Button onClick={() => dealCards(user.id)}>Deal</Button>
+        {users.map(user => (
+          <List key={user.id}>
+            <Row>
+              <Column>
+                <h4>{user.name}</h4>
+              </Column>
+              <Column>
+                <Button onClick={() => dealCards(user.id)}>Deal</Button>
+              </Column>
+            </Row>
+            <Row>
               <Hand curHand={user.curHand} />
-            </li>
-          )
-        }
+            </Row>
+          </List>
+        ))}
       </ul>
-    </Column>
+    </Border>
   );
 };
 
