@@ -69,7 +69,7 @@ let userList = [];
 const user = name => ({
   id: nextId++,
   name: name,
-  curHand: []
+  curHand: {}
 });
 
 // --- Scores ---
