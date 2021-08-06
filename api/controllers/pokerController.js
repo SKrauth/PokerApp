@@ -12,6 +12,12 @@ exports.create_a_user = function(req, res) {
   res.json(new_user);
 };
 
-exports.read_a_score = function(req, res) {};
+exports.read_high_score = function(req, res) {
+  let winner = model.getHighScore(req.query.users || []);
+  res.json(winner);
+};
 
-exports.read_users = function(req, res) {};
+exports.read_users = function(req, res) {
+  let users = model.getUsers();
+  res.json(users);
+};

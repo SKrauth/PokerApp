@@ -7,8 +7,8 @@ module.exports = function(app) {
     .post(controller.create_a_hand);
 
 
-  app.route('/score/:userId')
-    .get(controller.read_a_score);
+  app.route('/score')
+    .get(controller.read_high_score);
 
   app.route('/users')
     .get(controller.read_users)
